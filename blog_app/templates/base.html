@@ -21,6 +21,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
       <a class="navbar-brand" href="/">mój Blog</a>
+      <a class="navbar-brand" href="/new-post/">dodaj wpis</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -38,6 +39,17 @@
   <!-- Page Content -->
 
   <div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+          <br>
+          <h3>{{ message }}</h3>
+          {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+    <br>
     {% block content %}
     {% endblock %}
   </div>
