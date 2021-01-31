@@ -1,6 +1,6 @@
 from blog_app import app
 from flask import render_template, flash, redirect, request, url_for
-from blog_app.models import Entry, db, post_handling
+from blog_app.models import Entry, flash_msg, post_handling
 from blog_app.forms import EntryForm
 
 
@@ -17,10 +17,7 @@ def create_entry():
     if request.method == 'POST':
         if form.validate_on_submit():
             post_handling(form=form)
-            if form.is_published.data is True:
-                flash("Post został dodany i opublikowany")
-                return redirect(url_for("create_entry"))
-            flash("Post został dodany i czeka na publikację")
+            flash(flash_msg(form.is_published.data))
             return redirect(url_for("create_entry"))
         else:
             errors = form.errors
@@ -35,6 +32,7 @@ def edit_entry(entry_id):
     if request.method == 'POST':
         if form.validate_on_submit():
             post_handling(form=form, entry=entry)
+            flash("zmiany zostały zapisane")
         else:
             errors = form.errors
     return render_template("entry_form.html", form=form, errors=errors)

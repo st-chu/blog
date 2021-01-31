@@ -1,6 +1,5 @@
 from . import db
 import datetime
-from flask import flash
 
 
 class Entry(db.Model):
@@ -10,6 +9,12 @@ class Entry(db.Model):
     pub_date = db.Column(db.DateTime, nullable=False,
                          default=datetime.datetime.utcnow())
     is_published = db.Column(db.Boolean, default=False)
+
+
+def flash_msg(is_published):
+    if is_published is True:
+        return "Post został dodany i opublikowany"
+    return "Post został dodany i czeka na publikację"
 
 
 def post_handling(form, entry=None):
